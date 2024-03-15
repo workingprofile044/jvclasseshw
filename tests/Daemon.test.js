@@ -1,26 +1,34 @@
 import Daemon from '../src/characters/Daemon';
 
-describe('Daemon class', () => {
-    const character = new Daemon('Demon');
+describe('Daemon', () => {
+    let character;
 
-    test('should create a Daemon with correct properties', () => {
-        expect(character.name).toBe('Demon');
-        expect(character.type).toBe('Daemon');
-        expect(character.health).toBe(100);
-        expect(character.level).toBe(1);
-        expect(character.attack).toBe(10);
-        expect(character.defence).toBe(40);
+    beforeEach(() => {
+        character = new Daemon('Hellspawn');
     });
 
-    test('levelUp increases level and stats', () => {
+    test('constructor creates a character with correct properties', () => {
+        expect(character).toEqual(expect.objectContaining({
+            name: 'Hellspawn',
+            type: 'Daemon',
+            health: 100,
+            level: 1,
+            attack: 10,
+            defence: 40,
+        }));
+    });
+
+    test('levelUp increases level by 1 and stats by 20%', () => {
         character.levelUp();
-        expect(character.level).toBe(2);
-        expect(character.attack).toBeCloseTo(12);
-        expect(character.defence).toBeCloseTo(48);
+        expect(character).toEqual(expect.objectContaining({
+            level: 2,
+            attack: 12,
+            defence: 48,
+        }));
     });
 
     test('damage method reduces health correctly', () => {
         character.damage(10);
-        expect(character.health).toBeLessThan(100);
+        expect(character.health).toBeCloseTo(94);
     });
 });

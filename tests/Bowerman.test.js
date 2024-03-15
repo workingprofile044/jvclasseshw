@@ -1,27 +1,34 @@
 import Bowerman from '../src/characters/Bowerman';
 
-describe('Bowerman class', () => {
-    test('creation produces an object with correct properties', () => {
-        const bowerman = new Bowerman('Legolas');
-        expect(bowerman.name).toBe('Legolas');
-        expect(bowerman.type).toBe('Bowerman');
-        expect(bowerman.health).toBe(100);
-        expect(bowerman.level).toBe(1);
-        expect(bowerman.attack).toBe(25);
-        expect(bowerman.defence).toBe(25);
+describe('Bowerman', () => {
+    let character;
+
+    beforeEach(() => {
+        character = new Bowerman('Legolas');
+    });
+
+    test('constructor creates a character with correct properties', () => {
+        expect(character).toEqual(expect.objectContaining({
+            name: 'Legolas',
+            type: 'Bowerman',
+            health: 100,
+            level: 1,
+            attack: 25,
+            defence: 25,
+        }));
     });
 
     test('levelUp increases level by 1 and stats by 20%', () => {
-        const bowerman = new Bowerman('Legolas');
-        bowerman.levelUp();
-        expect(bowerman.level).toBe(2);
-        expect(bowerman.attack).toBeCloseTo(30);
-        expect(bowerman.defence).toBeCloseTo(30);
+        character.levelUp();
+        expect(character).toEqual(expect.objectContaining({
+            level: 2,
+            attack: 30,
+            defence: 30,
+        }));
     });
 
-    test('damage method reduces health', () => {
-        const bowerman = new Bowerman('Legolas');
-        bowerman.damage(10);
-        expect(bowerman.health).toBeCloseTo(92.5);
+    test('damage method reduces health correctly', () => {
+        character.damage(10);
+        expect(character.health).toBeCloseTo(92.5);
     });
 });

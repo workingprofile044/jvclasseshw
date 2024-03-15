@@ -1,32 +1,34 @@
 import Swordsman from '../src/characters/Swordsman';
 
-describe('Swordsman class', () => {
-    const name = 'Warrior';
-    let swordsman;
+describe('Swordsman', () => {
+    let character;
 
     beforeEach(() => {
-        swordsman = new Swordsman(name);
+        character = new Swordsman('Knight');
     });
 
-    test('creation produces a character with the correct properties', () => {
-        expect(swordsman.name).toBe(name);
-        expect(swordsman.type).toBe('Swordsman');
-        expect(swordsman.health).toBe(100);
-        expect(swordsman.level).toBe(1);
-        expect(swordsman.attack).toBe(40);
-        expect(swordsman.defence).toBe(10);
+    test('constructor creates a character with correct properties', () => {
+        expect(character).toEqual(expect.objectContaining({
+            name: 'Knight',
+            type: 'Swordsman',
+            health: 100,
+            level: 1,
+            attack: 40,
+            defence: 10,
+        }));
     });
 
-    test('levelUp method works correctly', () => {
-        swordsman.levelUp();
-        expect(swordsman.level).toBe(2);
-        expect(swordsman.attack).toBeCloseTo(48); // 40 * 1.2
-        expect(swordsman.defence).toBeCloseTo(12); // 10 * 1.2
-        expect(swordsman.health).toBe(100);
+    test('levelUp increases level by 1 and stats by 20%', () => {
+        character.levelUp();
+        expect(character).toEqual(expect.objectContaining({
+            level: 2,
+            attack: 48,
+            defence: 12,
+        }));
     });
 
-    test('damage method correctly reduces health', () => {
-        swordsman.damage(10);
-        expect(swordsman.health).toBeCloseTo(91); // 100 - 10 * (1 - 0.1)
+    test('damage method reduces health correctly', () => {
+        character.damage(10);
+        expect(character.health).toBeCloseTo(91);
     });
 });

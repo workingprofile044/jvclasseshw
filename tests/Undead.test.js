@@ -1,26 +1,34 @@
 import Undead from '../src/characters/Undead';
 
-describe('Undead class', () => {
-    const character = new Undead('Ghost');
+describe('Undead', () => {
+    let character;
 
-    test('should create an Undead with correct properties', () => {
-        expect(character.name).toBe('Ghost');
-        expect(character.type).toBe('Undead');
-        expect(character.health).toBe(100);
-        expect(character.level).toBe(1);
-        expect(character.attack).toBe(25);
-        expect(character.defence).toBe(25);
+    beforeEach(() => {
+        character = new Undead('Bonepile');
     });
 
-    test('levelUp increases level and stats', () => {
+    test('constructor creates a character with correct properties', () => {
+        expect(character).toEqual(expect.objectContaining({
+            name: 'Bonepile',
+            type: 'Undead',
+            health: 100,
+            level: 1,
+            attack: 25,
+            defence: 25,
+        }));
+    });
+
+    test('levelUp increases level by 1 and stats by 20%', () => {
         character.levelUp();
-        expect(character.level).toBe(2);
-        expect(character.attack).toBeCloseTo(30);
-        expect(character.defence).toBeCloseTo(30);
+        expect(character).toEqual(expect.objectContaining({
+            level: 2,
+            attack: 30,
+            defence: 30,
+        }));
     });
 
     test('damage method reduces health correctly', () => {
         character.damage(10);
-        expect(character.health).toBeLessThan(100);
+        expect(character.health).toBeCloseTo(92.5);
     });
 });

@@ -1,8 +1,13 @@
 export default class Character {
   constructor(name, type) {
     const types = ['Bowerman', 'Swordsman', 'Magician', 'Daemon', 'Undead', 'Zombie'];
-    if (typeof name !== 'string' || name.length < 2 || name.length > 10 || !types.includes(type)) {
-      throw new Error('Invalid character parameters');
+
+    if (typeof name !== 'string' || name.length < 2 || name.length > 10) {
+      throw new Error('Name must be a string of 2 to 10 characters');
+    }
+
+    if (!types.includes(type)) {
+      throw new Error('Invalid character type');
     }
 
     this.name = name;

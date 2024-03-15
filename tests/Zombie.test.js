@@ -1,26 +1,34 @@
 import Zombie from '../src/characters/Zombie';
 
-describe('Zombie class', () => {
-    const character = new Zombie('Walker');
+describe('Zombie', () => {
+    let character;
 
-    test('should create a Zombie with correct properties', () => {
-        expect(character.name).toBe('Walker');
-        expect(character.type).toBe('Zombie');
-        expect(character.health).toBe(100);
-        expect(character.level).toBe(1);
-        expect(character.attack).toBe(40);
-        expect(character.defence).toBe(10);
+    beforeEach(() => {
+        character = new Zombie('Husk');
     });
 
-    test('levelUp increases level and stats', () => {
+    test('constructor creates a character with correct properties', () => {
+        expect(character).toEqual(expect.objectContaining({
+            name: 'Husk',
+            type: 'Zombie',
+            health: 100,
+            level: 1,
+            attack: 40,
+            defence: 10,
+        }));
+    });
+
+    test('levelUp increases level by 1 and stats by 20%', () => {
         character.levelUp();
-        expect(character.level).toBe(2);
-        expect(character.attack).toBeCloseTo(48);
-        expect(character.defence).toBeCloseTo(12);
+        expect(character).toEqual(expect.objectContaining({
+            level: 2,
+            attack: 48,
+            defence: 12,
+        }));
     });
 
     test('damage method reduces health correctly', () => {
         character.damage(10);
-        expect(character.health).toBeLessThan(100);
+        expect(character.health).toBeCloseTo(91);
     });
 });
